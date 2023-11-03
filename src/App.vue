@@ -1,6 +1,7 @@
 <template>
   <Header></Header>
   <Tab></Tab>
+  <RouterView />
 </template>
 <script>
 import Header from '@/components/header/header.vue'

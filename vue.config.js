@@ -1,4 +1,5 @@
 const { defineConfig } = require('@vue/cli-service')
+const registerRouter = require('./backend/router.js')
 module.exports = defineConfig({
   transpileDependencies: true,
   css: {
@@ -11,5 +12,14 @@ module.exports = defineConfig({
       }
     }
 
+  },
+  devServer: {
+    setupMiddlewares(middlewares, devServer) {
+
+      registerRouter(devServer.app);
+
+      return middlewares;
+
+    },
   }
 })

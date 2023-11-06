@@ -1,6 +1,9 @@
 <!-- 推荐 -->
 <template>
-  <div class="recommend">
+  <div
+    class="recommend"
+    v-loading="loading"
+  >
     <Scroll class="recommend-content">
       <!-- 滚动组件，外层需要根节点 -->
       <div>
@@ -66,7 +69,11 @@ export default {
     Scroll
   },
 
-  computed: {},
+  computed: {
+    loading() {
+      return !this.sliders.length && !this.albums.length
+    }
+  },
   async created() {
     try {
       const res = await getRecommend()

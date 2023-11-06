@@ -8,7 +8,7 @@ export const get = (url, params) => {
     .then(res => {
       const serverData = res.data
       if (serverData.code === OK) {
-        return serverData
+        return serverData.result
       }
     })
     .catch(err => {

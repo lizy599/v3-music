@@ -2,6 +2,7 @@
 <template>
   <div class="recommend">
     <Scroll class="recommend-content">
+      <!-- 滚动组件，外层需要根节点 -->
       <div>
         <div class="slider-wrapper">
           <div class="slider-content">
@@ -29,7 +30,7 @@
                 <img
                   width="60"
                   height="60"
-                  :src="item.pic"
+                  v-lazy="item.pic"
                 >
               </div>
               <div class="text">

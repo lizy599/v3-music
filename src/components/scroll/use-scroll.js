@@ -1,16 +1,37 @@
-// 滚动组件
-import BScroll from "@better-scroll/core"
-import ObserveDOM from "@better-scroll/observe-dom"
-import { onMounted, onUnmounted, ref } from "vue"
+import BScroll from '@better-scroll/core'
+import ObserveDOM from '@better-scroll/observe-dom'
+import { onMounted, onUnmounted, onActivated, onDeactivated, ref } from 'vue'
+
 BScroll.use(ObserveDOM)
 
-export default function useScroll(wrapperRef, options) {
+export default function useScroll(wrapperRef, options, emit) {
   const scroll = ref(null)
+
   onMounted(() => {
-    // 内容高度变化时重新计算
-    scroll.value = new BScroll(wrapperRef.value, { observeDOM: true, ...options })
+    const scrollVal = scroll.value = new BScroll(wrapperRef.value, {
+      observeDOM: true,
+      ...options
+    })
+    // 为0时不能监听滚动
+    if (options.probeType > 0) {
+      scrollVal.on('scroll', (pos) => {
+        emit('scroll', pos)
+      })
+    }
   })
+
   onUnmounted(() => {
     scroll.value.destroy()
   })
+
+  onActivated(() => {
+    scroll.value.enable()
+    scroll.value.refresh()
+  })
+
+  onDeactivated(() => {
+    scroll.value.disable()
+  })
+
+  return scroll
 }

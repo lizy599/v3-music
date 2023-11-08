@@ -2,7 +2,7 @@
 <template>
   <div
     class="recommend"
-    v-loading="loading"
+    v-loading:[loadingText]="loading"
   >
     <Scroll class="recommend-content">
       <!-- 滚动组件，外层需要根节点 -->
@@ -60,7 +60,8 @@ export default {
   data() {
     return {
       sliders: [],
-      albums: []
+      albums: [],
+      loadingText: '正在加载...'
     }
   },
 

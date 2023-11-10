@@ -17,6 +17,7 @@ const mutations = {
   setFullScreen(state, fullScreen) {
     state.fullScreen = fullScreen
   },
+  // 收藏按钮
   setFavoriteList(state, list) {
     state.favoriteList = list
   },

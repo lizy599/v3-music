@@ -29,7 +29,7 @@ export function changeMode({ commit, state, getters }, mode) {
   const index = state.playlist.findIndex((song) => {
     return song.id === currentId
   })
-
+  // 切换模式，不改变当前播放的歌曲
   commit('setCurrentIndex', index)
   commit('setPlayMode', mode)
 }

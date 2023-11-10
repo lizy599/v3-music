@@ -11,6 +11,6 @@ export function processSongs(songs) {
     return songs.map(item => {
       item.url = map[item.mid]
       return item
-    }).filter((item => item.url.indexOf('vkey')) > -1)
+    }).filter((item => item.url.indexOf('vkey') > -1))
   })
 }

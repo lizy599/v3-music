@@ -7,10 +7,8 @@
       :data="singers"
       @select="selectSinger"
     ></index-list>
-    <!-- <router-view
-      v-slot="{ Component }"
-      
-    >
+    <router-view v-slot="{ Component }">
+      <!-- name和class类名匹配 appear立即执行 -->
       <transition
         appear
         name="slide"
@@ -20,8 +18,7 @@
           :data="selectedSinger"
         />
       </transition>
-    </router-view> -->
-    <router-view :singer="selectedSinger"></router-view>
+    </router-view>
   </div>
 </template>
 
@@ -49,6 +46,7 @@ export default {
   methods: {
     selectSinger(singer) {
       this.selectedSinger = singer
+      // 缓存singer
       this.cacheSinger(singer)
       this.$router.push({
         path: `/singer/${singer.mid}`

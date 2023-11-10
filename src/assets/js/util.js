@@ -1,4 +1,6 @@
+// 洗牌函数
 export function shuffle(source) {
+  // 拷贝一份
   const arr = source.slice()
   for (let i = 0; i < arr.length; i++) {
     const j = getRandomInt(i)
@@ -6,7 +8,7 @@ export function shuffle(source) {
   }
   return arr
 }
-
+// 获取随机值0-max
 function getRandomInt(max) {
   return Math.floor(Math.random() * (max + 1))
 }

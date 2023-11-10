@@ -8,6 +8,7 @@ export default function createLoadingLikeDirective(Comp) {
     mounted(el, binding) {
       const app = createApp(Comp)
       const instance = app.mount(document.createElement('div'))
+      // 不同组件绑定不同的name，防止覆盖
       const name = Comp.name
       if (!el[name]) {
         el[name] = {}

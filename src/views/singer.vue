@@ -7,7 +7,10 @@
       :data="singers"
       @select="selectSinger"
     ></index-list>
-    <router-view v-slot="{ Component }">
+    <!-- <router-view
+      v-slot="{ Component }"
+      
+    >
       <transition
         appear
         name="slide"
@@ -17,7 +20,8 @@
           :data="selectedSinger"
         />
       </transition>
-    </router-view>
+    </router-view> -->
+    <router-view :singer="selectedSinger"></router-view>
   </div>
 </template>
 

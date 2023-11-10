@@ -29,9 +29,11 @@ export default function useShortcut(props, groupRef) {
   }
 
   function scrollTo(index) {
+    // 在黑边拖动NaN问题
     if (isNaN(index)) {
       return
     }
+    // 限制index范围
     index = Math.max(0, Math.min(shortcutList.value.length - 1, index))
     const targetEl = groupRef.value.children[index]
     const scroll = scrollRef.value.scroll

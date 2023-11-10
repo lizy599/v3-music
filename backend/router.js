@@ -29,7 +29,8 @@ const commonParams = {
 
 // 获取一个随机数值
 function getRandomVal(prefix = '') {
-  return prefix + (Math.random() + '').replace('0.', '')
+  // return prefix + (Math.random() + '').replace('0.', '')
+  return Date.now()
 }
 
 // 获取一个随机 uid
@@ -357,7 +358,6 @@ function registerSingerDetail(app) {
 function registerSongsUrl(app) {
   app.get('/api/getSongsUrl', (req, res) => {
     const mid = req.query.mid
-
     let midGroup = []
     // 第三方接口只支持最多处理 100 条数据，所以如果超过 100 条数据，我们要把数据按每组 100 条切割，发送多个请求
     if (mid.length > 100) {
@@ -368,7 +368,7 @@ function registerSongsUrl(app) {
     } else {
       midGroup = [mid]
     }
-
+    console.log(midGroup);
     // 以歌曲的 mid 为 key，存储歌曲 URL
     const urlMap = {}
 
@@ -383,7 +383,7 @@ function registerSongsUrl(app) {
             songmid: mid,
             songtype: new Array(mid.length).fill(0),
             uin: '0',
-            loginflag: 0,
+            loginflag: 1,
             platform: '23',
             h5to: 'speed'
           }
@@ -395,13 +395,14 @@ function registerSongsUrl(app) {
           platform: 'h5'
         }
       }
-
       const sign = getSecuritySign(JSON.stringify(data))
       const url = `https://u.y.qq.com/cgi-bin/musics.fcg?_=${getRandomVal()}&sign=${sign}`
-
+      console.log(url);
       // 发送 post 请求
-      return post(url, data).then((response) => {
+      return post(url, JSON.stringify(data)).then((response) => {
         const data = response.data
+        console.log(data);
+
         if (data.code === ERR_OK) {
           const midInfo = data.req_0.data.midurlinfo
           const sip = data.req_0.data.sip

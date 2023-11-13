@@ -64,6 +64,7 @@
             ref="lyricScrollRef"
             :style="middleRStyle"
           >
+            <!-- 歌词滚动列表 -->
             <div class="lyric-wrapper">
               <div
                 v-if="currentLyric"
@@ -99,6 +100,7 @@
             ></span>
           </div>
           <div class="progress-wrapper">
+            <!-- 当前播放时间 -->
             <span class="time time-l">{{formatTime(currentTime)}}</span>
             <div class="progress-bar-wrapper">
               <progress-bar
@@ -108,6 +110,7 @@
                 @progress-changed="onProgressChanged"
               ></progress-bar>
             </div>
+            <!-- 当前歌曲总时长 -->
             <span class="time time-r">{{formatTime(currentSong.duration)}}</span>
           </div>
           <!-- 操作区域 -->
@@ -160,6 +163,7 @@
       :progress="progress"
       :toggle-play="togglePlay"
     ></mini-player>
+    <!-- timeupdate 播放进度 -->
     <audio
       ref="audioRef"
       @pause="pause"
@@ -199,6 +203,7 @@ export default {
     const audioRef = ref(null)
     const barRef = ref(null)
     const songReady = ref(false)
+    // 当前播放时间
     const currentTime = ref(0)
     let progressChanging = false
 
@@ -230,7 +235,7 @@ export default {
     const playIcon = computed(() => {
       return playing.value ? 'icon-pause' : 'icon-play'
     })
-
+    // 当前进度，播放当间 / 总时间
     const progress = computed(() => {
       return currentTime.value / currentSong.value.duration
     })
@@ -244,6 +249,7 @@ export default {
       if (!newSong.id || !newSong.url) {
         return
       }
+      // 歌曲变化，播放时间置0
       currentTime.value = 0
       // 歌曲变化置为false
       songReady.value = false
@@ -357,6 +363,7 @@ export default {
     }
 
     function updateTime(e) {
+      // 获取当前播放进度，进度条改变时，不改变进度
       if (!progressChanging) {
         currentTime.value = e.target.currentTime
       }
@@ -372,12 +379,13 @@ export default {
     function onProgressChanged(progress) {
       progressChanging = false
       audioRef.value.currentTime = currentTime.value = currentSong.value.duration * progress
+      // 暂停时，播放
       if (!playing.value) {
         store.commit('setPlayingState', true)
       }
       playLyric()
     }
-
+    // 结束后根据模式，切换下一首
     function end() {
       currentTime.value = 0
       if (playMode.value === PLAY_MODE.loop) {

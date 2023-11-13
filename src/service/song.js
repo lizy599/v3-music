@@ -17,10 +17,12 @@ export function processSongs(songs) {
 const lyricMap = {}
 
 export function getLyric(song) {
+  // 如果歌词已存在，不发请求再次获取
   if (song.lyric) {
     return Promise.resolve(song.lyric)
   }
   const mid = song.mid
+
   const lyric = lyricMap[mid]
   if (lyric) {
     return Promise.resolve(lyric)

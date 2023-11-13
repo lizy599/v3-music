@@ -3,12 +3,15 @@
     class="progress-bar"
     @click="onClick"
   >
+    <!-- 黑色条 -->
     <div class="bar-inner">
+      <!-- 黄色条 -->
       <div
         class="progress"
         ref="progress"
         :style="progressStyle"
       ></div>
+      <!-- button -->
       <div
         class="progress-btn-wrapper"
         :style="btnStyle"
@@ -23,69 +26,79 @@
 </template>
 
 <script>
-  const progressBtnWidth = 16
+const progressBtnWidth = 16
 
-  export default {
-    name: 'progress-bar',
-    emits: ['progress-changing', 'progress-changed'],
-    props: {
-      progress: {
-        type: Number,
-        default: 0
-      }
+export default {
+  name: 'progress-bar',
+  emits: ['progress-changing', 'progress-changed'],
+  props: {
+    // 进度 0～1
+    progress: {
+      type: Number,
+      default: 0
+    }
+  },
+  data() {
+    return {
+      // 偏移量
+      offset: 0
+    }
+  },
+  computed: {
+    progressStyle() {
+      return `width:${this.offset}px`
     },
-    data() {
-      return {
-        offset: 0
-      }
+    btnStyle() {
+      return `transform:translate3d(${this.offset}px,0,0)`
+    }
+  },
+  watch: {
+    // 计算偏移量
+    progress(newProgress) {
+      this.setOffset(newProgress)
+    }
+  },
+  created() {
+    // 不需要观测touch的变化
+    this.touch = {}
+  },
+  methods: {
+    onTouchStart(e) {
+      // 获取横坐标
+      this.touch.x1 = e.touches[0].pageX
+      // 黄色条初始宽度
+      this.touch.beginWidth = this.$refs.progress.clientWidth
     },
-    computed: {
-      progressStyle() {
-        return `width:${this.offset}px`
-      },
-      btnStyle() {
-        return `transform:translate3d(${this.offset}px,0,0)`
-      }
+    onTouchMove(e) {
+      // 偏移横坐标的位移
+      const delta = e.touches[0].pageX - this.touch.x1
+      const tempWidth = this.touch.beginWidth + delta
+      const barWidth = this.$el.clientWidth - progressBtnWidth
+      const progress = Math.min(1, Math.max(tempWidth / barWidth, 0))
+      this.offset = barWidth * progress
+      this.$emit('progress-changing', progress)
     },
-    watch: {
-      progress(newProgress) {
-        this.setOffset(newProgress)
-      }
+    onTouchEnd() {
+      const barWidth = this.$el.clientWidth - progressBtnWidth
+      const progress = this.$refs.progress.clientWidth / barWidth
+      this.$emit('progress-changed', progress)
     },
-    created() {
-      this.touch = {}
+    // 点击切换进度
+    onClick(e) {
+      const rect = this.$el.getBoundingClientRect()
+      const offsetWidth = e.pageX - rect.left
+      const barWidth = this.$el.clientWidth - progressBtnWidth
+      const progress = offsetWidth / barWidth
+      this.$emit('progress-changed', progress)
     },
-    methods: {
-      onTouchStart(e) {
-        this.touch.x1 = e.touches[0].pageX
-        this.touch.beginWidth = this.$refs.progress.clientWidth
-      },
-      onTouchMove(e) {
-        const delta = e.touches[0].pageX - this.touch.x1
-        const tempWidth = this.touch.beginWidth + delta
-        const barWidth = this.$el.clientWidth - progressBtnWidth
-        const progress = Math.min(1, Math.max(tempWidth / barWidth, 0))
-        this.offset = barWidth * progress
-        this.$emit('progress-changing', progress)
-      },
-      onTouchEnd() {
-        const barWidth = this.$el.clientWidth - progressBtnWidth
-        const progress = this.$refs.progress.clientWidth / barWidth
-        this.$emit('progress-changed', progress)
-      },
-      onClick(e) {
-        const rect = this.$el.getBoundingClientRect()
-        const offsetWidth = e.pageX - rect.left
-        const barWidth = this.$el.clientWidth - progressBtnWidth
-        const progress = offsetWidth / barWidth
-        this.$emit('progress-changed', progress)
-      },
-      setOffset(progress) {
-        const barWidth = this.$el.clientWidth - progressBtnWidth
-        this.offset = barWidth * progress
-      }
+    setOffset(progress) {
+      // 总的宽度减去button的宽度
+      const barWidth = this.$el.clientWidth - progressBtnWidth
+      // 计算偏移量
+      this.offset = barWidth * progress
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

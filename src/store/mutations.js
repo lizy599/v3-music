@@ -23,6 +23,7 @@ const mutations = {
   },
   addSongLyric(state, { song, lyric }) {
     state.sequenceList.map((item) => {
+      // 已经获取过的歌曲，不用再次接口获取
       if (item.mid === song.mid) {
         item.lyric = lyric
       }

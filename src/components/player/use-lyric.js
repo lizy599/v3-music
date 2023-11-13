@@ -23,12 +23,13 @@ export default function useLyric({ songReady, currentTime }) {
     currentLineNum.value = 0
     pureMusicLyric.value = ''
     playingLyric.value = ''
-
+    // 歌曲切换，获取歌词
     const lyric = await getLyric(newSong)
     store.commit('addSongLyric', {
       song: newSong,
       lyric
     })
+    // 获取歌词中获取下一首歌，之前的逻辑结束掉
     if (currentSong.value.lyric !== lyric) {
       return
     }

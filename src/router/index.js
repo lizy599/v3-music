@@ -4,6 +4,7 @@ import Search from '@/views/search.vue'
 import Singer from '@/views/singer.vue'
 import SingerDetail from '@/views/singer-detail.vue'
 import TopList from '@/views/top-list.vue'
+import Album from '@/views/album.vue'
 const routes = [
   {
     path: '/',
@@ -11,7 +12,14 @@ const routes = [
   },
   {
     path: '/recommend',
-    component: Recommend
+    component: Recommend,
+    children: [
+      {
+        path: ':id',
+        component: Album
+      }
+
+    ]
   },
   {
     path: '/search',

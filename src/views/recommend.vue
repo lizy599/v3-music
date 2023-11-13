@@ -49,6 +49,18 @@
         </div>
       </div>
     </Scroll>
+    <router-view v-slot="{ Component }">
+      <!-- name和class类名匹配 appear立即执行 -->
+      <transition
+        appear
+        name="slide"
+      >
+        <component
+          :is="Component"
+          :data="selectedAlbum"
+        />
+      </transition>
+    </router-view>
   </div>
 </template>
 
@@ -56,11 +68,14 @@
 import { getRecommend } from '@/service/recommend'
 import Slider from '@/components/ slider/slider.vue'
 import Scroll from '@/components/scroll/scroll.vue'
+import storage from 'good-storage'
+import { ALBUM_KEY } from '@/assets/js/constant'
 export default {
   data() {
     return {
       sliders: [],
       albums: [],
+      selectedAlbum: null,
       loadingText: '正在加载...'
     }
   },
@@ -88,7 +103,18 @@ export default {
   },
   mounted() { },
 
-  methods: {}
+  methods: {
+    selectItem(album) {
+      this.cacheAlbum(album)
+      this.selectedAlbum = album
+      this.$router.push({
+        path: `/recommend/${album.id}`
+      })
+    },
+    cacheAlbum(album) {
+      storage.session.set(ALBUM_KEY, album)
+    }
+  }
 }
 
 </script>

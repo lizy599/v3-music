@@ -5,6 +5,7 @@ import Singer from '@/views/singer.vue'
 import SingerDetail from '@/views/singer-detail.vue'
 import TopList from '@/views/top-list.vue'
 import Album from '@/views/album.vue'
+import TopDetail from '@/views/top-detail.vue'
 const routes = [
   {
     path: '/',
@@ -35,7 +36,13 @@ const routes = [
     ]
   }, {
     path: '/top-list',
-    component: TopList
+    component: TopList,
+    children: [
+      {
+        path: ':id',
+        component: TopDetail
+      }
+    ]
   }
 ]
 

@@ -1,7 +1,14 @@
 <template>
   <Header></Header>
   <Tab></Tab>
-  <RouterView :style="viewStyle"></RouterView>
+  <RouterView
+    :style="viewStyle"
+    v-slot="{Component}"
+  >
+    <keep-alive>
+      <component :is="Component" />
+    </keep-alive>
+  </RouterView>
   <RouterView
     :style="viewStyle"
     v-slot="{Component}"
@@ -11,7 +18,9 @@
       appear
       name="slide"
     >
-      <component :is="Component" />
+      <keep-alive>
+        <component :is="Component" />
+      </keep-alive>
     </transition>
   </RouterView>
   <Player />

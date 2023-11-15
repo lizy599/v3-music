@@ -15,37 +15,39 @@
 </template>
 
 <script>
-  import { debounce } from 'throttle-debounce'
+import { debounce } from 'throttle-debounce'
 
-  export default {
-    name: 'search-input',
-    props: {
-      modelValue: String,
-      placeholder: {
-        type: String,
-        default: '搜索歌曲、歌手'
-      }
-    },
-    data() {
-      return {
-        query: this.modelValue
-      }
-    },
-    created() {
-      this.$watch('query', debounce(300, (newQuery) => {
-        this.$emit('update:modelValue', newQuery.trim())
-      }))
+export default {
+  name: 'search-input',
+  // 双向绑定
+  props: {
+    modelValue: String,
+    placeholder: {
+      type: String,
+      default: '搜索歌曲、歌手'
+    }
+  },
+  data() {
+    return {
+      query: this.modelValue
+    }
+  },
+  created() {
+    // 300毫秒后才更新，防抖
+    this.$watch('query', debounce(300, (newQuery) => {
+      this.$emit('update:modelValue', newQuery.trim())
+    }))
 
-      this.$watch('modelValue', (newVal) => {
-        this.query = newVal
-      })
-    },
-    methods: {
-      clear() {
-        this.query = ''
-      }
+    this.$watch('modelValue', (newVal) => {
+      this.query = newVal
+    })
+  },
+  methods: {
+    clear() {
+      this.query = ''
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

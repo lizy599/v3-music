@@ -6,6 +6,7 @@ import SingerDetail from '@/views/singer-detail.vue'
 import TopList from '@/views/top-list.vue'
 import Album from '@/views/album.vue'
 import TopDetail from '@/views/top-detail.vue'
+import UserCenter from '@/views/user-center.vue'
 const routes = [
   {
     path: '/',
@@ -43,6 +44,12 @@ const routes = [
         component: TopDetail
       }
     ]
+  },
+  {
+    path: '/user',
+    components: {
+      user: UserCenter
+    }
   }
 ]
 

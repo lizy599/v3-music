@@ -27,9 +27,11 @@
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-plugin-vuex": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
+    "cookie-parser": "^1.4.6",
+    "js-base64": "^3.7.5",
     "pinyin": "^2.9.1",
     "sass": "^1.32.7",
     "sass-loader": "^12.0.0",
-    "js-base64": "^3.7.5"
+    "xsrf": "^1.0.0"
   }
 }

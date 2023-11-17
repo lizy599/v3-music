@@ -28,6 +28,7 @@
     "@vue/cli-plugin-vuex": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "js-base64": "^3.7.5",
     "pinyin": "^2.9.1",
     "sass": "^1.32.7",

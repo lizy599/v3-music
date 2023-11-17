@@ -45,7 +45,8 @@ function get(url, params) {
   return axios.get(url, {
     headers: {
       referer: 'https://y.qq.com/',
-      origin: 'https://y.qq.com/'
+      origin: 'https://y.qq.com/',
+      'X-Xsrf-Token': '2v7Wrp5V-Hbt5PI8nqmERLxfw0Vjnfv-F_Eo'
     },
     params: Object.assign({}, commonParams, params)
   })
@@ -58,7 +59,8 @@ function post(url, params) {
     headers: {
       referer: 'https://y.qq.com/',
       origin: 'https://y.qq.com/',
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'X-Xsrf-Token': '2v7Wrp5V-Hbt5PI8nqmERLxfw0Vjnfv-F_Eo'
     }
   })
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <span class="icon"></span>
-    <h1 class="text">Chicken Music</h1>
+    <h1 class="text">QinQin Music</h1>
     <router-link
       class="mine"
       to="/user"
@@ -30,7 +30,8 @@ export default {
       width: 30px;
       height: 32px;
       margin-right: 9px;
-      @include bg-image('logo');
+      // @include bg-image('logo');
+      background-image: url('@/assets/images/default.png');
       background-size: 30px 32px;
     }
     .text {

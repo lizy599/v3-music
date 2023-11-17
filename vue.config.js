@@ -15,7 +15,6 @@ module.exports = defineConfig({
   },
   devServer: {
     setupMiddlewares(middlewares, devServer) {
-
       registerRouter(devServer.app);
 
       return middlewares;
@@ -29,5 +28,5 @@ module.exports = defineConfig({
     }
   },
   productionSourceMap: false,
-  publicPath: process.env.NODE_ENV === 'production' ? '/v3-music/' : '/'
+  publicPath: process.env.NODE_ENV === 'production' ? './' : '/'
 })
